@@ -1,0 +1,24 @@
+{
+  "name": "data_persistence",
+  "version": "1.0.0",
+  "description": "Data persistence with Express and SQLite3",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "sqlite",
+    "express"
+  ],
+  "author": "David Coy",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
+}
