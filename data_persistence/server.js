@@ -7,25 +7,6 @@ const express = require('express'),
 
 const app = express();
 
-let hbs = exphbs.create({
-  helpers: {
-    albumData: (query) => {
-      db.each(albumQuery, (err, row) => {
-        if (err) { throw err; }
-        console.log(row.Title);
-        return row;
-      });
-      db.close();
-    },
-    artists: () => {
-      console.log("test");
-    }
-  }
-});
-
-const albumQuery = `SELECT ArtistId, Title FROM "Album" LIMIT 2`;
-
-
 app.engine('.hbs', exphbs({
   extname: '.hbs',
   defaultLayout: 'layout',
@@ -43,14 +24,18 @@ app.get('/', (req, res) => {
 });
 
 app.get('/albums', (req, res) => {
+  let data = [];
+
+  db.each(`SELECT Title, Name FROM Album INNER JOIN Artist USING (ArtistId)`, (err, row) => {
+    if (err) { throw err; }
+    data.push(row);
+  });
+  console.log(data);
+  
   res.render('albums', {
     title: 'Albums',
-    helpers: {
-      albums: hbs.albumData,
-      artists: hbs.artists
-    }
+    albums: data
   });
-  console.log("Rendered albums");
 });
 
 app.use((req, res) => {
